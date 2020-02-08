@@ -85,20 +85,19 @@ if __name__ == '__main__':
     import time
 
     DAOCLOUD_APITOKEN = os.getenv('DAOCLOUD_APITOKEN', "x")
-    DAOCLOUD_APPNAME = os.getenv('DAOCLOUD_APP_NAME', "x")
+    DAOCLOUD_APP_NAME = os.getenv('DAOCLOUD_APP_NAME', "x")
     DAOCLOUD_APP_RELEASE = os.getenv('DAOCLOUD_APP_RELEASE', "x")
 
     start_time = time.time()
     daoapi = dao_api(DAOCLOUD_APITOKEN)
-    app = daoapi.app_by_name(DAOCLOUD_APPNAME)
+    app = daoapi.app_by_name(DAOCLOUD_APP_NAME)
     print("find app %s", app)
-    app_redeploy_result = daoapi.app_redeploy(daoapi.app_by_name(DAOCLOUD_APPNAME)['app'][0]['id'],
-                                              DAOCLOUD_APP_RELEASE)
+    app_redeploy_result = daoapi.app_redeploy(app['app'][0]['id'], DAOCLOUD_APP_RELEASE)
     print("app_redeploy result:", app_redeploy_result)
     if 'action_id' not in app_redeploy_result:
         exit(1)
     for i in range(1, 15):
-        result = daoapi.actions(daoapi.app_by_name(DAOCLOUD_APPNAME)['app'][0]['id'], app_redeploy_result['action_id'])
+        result = daoapi.actions(daoapi.app_by_name(DAOCLOUD_APP_NAME)['app'][0]['id'], app_redeploy_result['action_id'])
         print("app_redeploy result:", result)
         if result['state'] == 'success':
             print("app_redeploy success: %s s", time.time() - start_time)
