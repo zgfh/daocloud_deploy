@@ -102,5 +102,5 @@ if __name__ == '__main__':
             print("app_redeploy result:", result)
             if result['state'] == 'success':
                 print("app_redeploy success: %s s", time.time() - start_time)
-                exit(0)
+                break
             time.sleep(5)
