@@ -50,7 +50,7 @@ class dao_api():
         tmpapps = requests.get(self.__base_url__ + '/apps', headers={"Authorization": "token " + self.__token__}).json()
         result_apps = []
         for tmpapp in tmpapps['app']:
-            if name in tmpapp['name']:
+            if name == tmpapp['name']:
                 result_apps.append(tmpapp)
         return {'app': result_apps}
 
